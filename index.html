@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <!-- Meta tags for social media banners, these should be filled in appropriatly as they are your "business card" -->
+  <!-- Replace the content tag with appropriate information -->
+  <meta name="description" content="MeDS">
+  <meta property="og:title" content="MeDS"/>
+  <meta property="og:description" content="MeDS"/>
+  <meta property="og:url" content="URL OF THE WEBSITE"/>
+  <!-- Path to banner image, should be in the path listed below. Optimal dimenssions are 1200X630-->
+  <meta property="og:image" content="static/image/your_banner_image.png" />
+  <meta property="og:image:width" content="1200"/>
+  <meta property="og:image:height" content="630"/>
+
+
+  <meta name="twitter:title" content="MeDS">
+  <meta name="twitter:description" content="MeDS">
+  <!-- Path to banner image, should be in the path listed below. Optimal dimenssions are 1200X600-->
+  <meta name="twitter:image" content="static/images/your_twitter_banner_image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <!-- Keywords for your paper to be indexed by-->
+  <meta name="keywords" content="KEYWORDS SHOULD BE PLACED HERE">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <title>Memory-Distilled Selection for Noise-Robust Anomaly Detection
+  </title>
+  <link rel="icon" type="image/x-icon" href="static/images/icon.ico">
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+  rel="stylesheet">
+
+  <link rel="stylesheet" href="static/css/bulma.min.css">
+  <link rel="stylesheet" href="static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+  href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="static/css/index.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://documentcloud.adobe.com/view-sdk/main.js"></script>
+  <script defer src="static/js/fontawesome.all.min.js"></script>
+  <script src="static/js/bulma-carousel.min.js"></script>
+  <script src="static/js/bulma-slider.min.js"></script>
+  <script src="static/js/index.js"></script>
+
+  <!-- MathJax for LaTeX rendering -->
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']]
+      },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+
+
+<body>
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h1 class="title is-1 publication-title">Memory-Distilled Selection for Noise-Robust Anomaly Detection</h1>
+            <div class="is-size-5 publication-authors">
+              <!-- Paper authors -->
+              <span class="author-block">
+                <a href="https://www.linkedin.com/in/sirojbek-safarov-91a2021ab/" target="_blank">Sirojbek Safarov</a><sup>*</sup>,
+              </span>
+              <span class="author-block">
+                <a href="https://www.linkedin.com/in/jaewoo-park-4bab49124/" target="_blank">Jaewoo Park</a><sup>*</sup>,
+              </span>
+              <span class="author-block">
+                <a href="https://www.linkedin.com/in/jungyg/" target="_blank">Yoon Gyo Jung</a><sup>*</sup>,
+              </span>
+              <span class="author-block">
+                <a href="https://www.linkedin.com/in/kuanchuanpeng/" target="_blank">Kuan-Chuan Peng</a>,
+              </span>
+              <span class="author-block">
+                <a href="https://www.linkedin.com/in/kim-wonchul-12271b117/">Wonchul Kim</a>,
+              </span>
+              <span class="author-block">
+                <a href="https://www.linkedin.com/in/seongdeok-bang-603376191/">Seongdeok Bang</a>,
+              </span>
+              <span class="author-block">
+                <a href="https://www.linkedin.com/in/octavia-camps-216b2616/">Octavia Camps</a>,
+              </span>
+            </div>
+
+                  <div class="is-size-5 publication-authors">
+                    <span class="author-block">AIVEX&emsp;&emsp; Northeastern University&emsp;&emsp;Mitsubishi Electric Research Laboratories<br>ICML2026
+                    </span>
+                    <span class="eql-cntrb"><small><br><sup>*</sup>Equal Contribution</small></span>
+                  </div>
+
+                  <div class="column has-text-centered">
+                    <div class="publication-links">
+                         <!-- Arxiv PDF link -->
+                      <span class="link-block">
+                        <a href="https://arxiv.org/abs/2504.02775" target="_blank"
+                        class="external-link button is-normal is-rounded is-dark">
+                        <span class="icon">
+                          <i class="fas fa-file-pdf"></i>
+                        </span>
+                        <span>Paper</span>
+                      </a>
+                    </span>
+
+
+                  <!-- Github link -->
+                  <span class="link-block">
+                    <a href="https://github.com/jungyg/TailedCore" target="_blank"
+                    class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fab fa-github"></i>
+                    </span>
+                    <span>Code</span>
+                  </a>
+                </span>
+
+                <!-- ArXiv abstract Link -->
+                <!-- <span class="link-block">
+                  <a href="https://arxiv.org/abs/2504.02775" target="_blank"
+                  class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                    <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span> -->
+                </a>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+      <img src="static/images/pipeline.png" alt="MY ALT TEXT"/>
+      <h2 class="subtitle has-text-centered">
+        Pipeline of MeDS consisted of 3 steps.
+      </h2>
+    </div>
+  </div>
+</section>
+<!-- End teaser video -->
+
+<!-- Paper abstract -->
+<section class="section hero is-light">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            Anomaly detection (AD) under data contamination is critical for deploying 
+            unsupervised defect detection in industrial environments, where curating 
+            perfectly clean training sets is impractical. However, existing methods 
+            are sensitive to contamination, suffering significant performance degradation 
+            as the noise ratio increases. In this paper, we propose Memory-Distilled Selection 
+            (MeDS), a training algorithm based on data selection. MeDS constructs an 
+            ensemble of partial memories via random subsampling, where the resulting 
+            sparsity acts as a low-pass filter that captures nominal patterns across a 
+            wide range of noise ratios, enabling coarse-level identification of contaminated 
+            samples. The aggregated distances to the bootstrapped memories are then distilled 
+            into a reconstruction score network, which is subsequently fine-tuned on clean data 
+            filtered using scores from the distilled model, enabling fine-grained localization of 
+            anomalies. MeDS~is robust across a wide range of noise ratios without requiring 
+            noise-ratio-specific hyperparameter tuning, achieving 99.16% image-level AUROC 
+            on MVTecAD at a 40% noise ratio, and attaining state-of-the-art performance on 
+            both VisA and Real-IAD under noisy settings. We thoroughly verify the efficacy of 
+            MeDS on industrial AD benchmarks under noisy data scenarios, accompanied by in-depth 
+            empirical analyses.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End paper abstract -->
+
+
+<!-- Image carousel -->
+<section class="section" id="results">
+  <div class="table-container">
+    <!-- Your image here -->
+    <h2 class="subtitle has-text-centered">
+      [Step 1: Memory Score Construction] 
+    </h2>
+    <br>
+    <img src="static/images/step1.png" alt="method" style="width:100%; max-width:1000px; display:block; margin:auto; align-items:center;"/>
+      <div class="content has-text-justified" style="max-width:1000px; margin:auto;">
+        <p>
+          Subsample \(\rho = 0.1\) of feature set \(g(\mathcal{D})\) \(B\) times, resulting in \(\{\mathcal{M}_1, \ldots, \mathcal{M}_B\}\), and ensemble them. With an appropriate subsampling ratio, the sparse nature of the memory ensemble acts as a low-pass filter (explained in Theorem 1) and separates normal and anomalous features. However, these features aren’t directly trained by the AD dataset and show limited feature representation.
+
+        </p>
+        <p style="text-align:center;">
+          \[
+            S_{\mathbb{M}}(x) \;=\; \frac{1}{\mathcal{B}} \sum_{b=1}^{\mathcal{B}} s_{\mathcal{M}_b}(x)
+          \]
+        </p>
+        <p>
+          <strong>Theorem 1.</strong> Under a regularity condition, for any anomaly patch features \(q_{\text{anom}}\) and normal patch features \(q_{\text{norm}}\), the expected gap
+        </p>
+        <p style="text-align:center;">
+          \[
+            \Delta(m) \;:=\; \mathbb{E}\!\left[D(q_{\text{anom}}, \mathcal{M})\right] - \mathbb{E}\!\left[D(q_{\text{norm}}, \mathcal{M})\right]
+          \]
+        </p>
+        <p>
+          satisfies \(\Delta(m) > 0\) and is decomposed into a second-order Taylor approximation \(\Delta_0\) with remainder \(\epsilon_0(m)\): \(\Delta(m) = \Delta_0(m) + \epsilon_0(m)\), where
+        </p>
+        <p style="text-align:center;">
+          \[
+            \Delta_0(m) \;=\; \int_0^{\infty} \delta(r) \cdot \omega(m, r)\, dr
+          \]
+        </p>
+        <p>
+          with a weight function \(\omega(m, r)\) that is unimodal with respect to \(m\). The expectation \(\mathbb{E}\) is over the memory \(\mathcal{M}\) that is randomly subsampled from the extracted feature set \(g(\mathcal{D})\) with the constraint \(|\mathcal{M}| = m\). There is an appropriate sampling ratio maximizing the normal–abnormal gap.
+        </p>
+      </div>
+      <br>
+      <br>
+      <br>
+
+      <h2 class="subtitle has-text-centered" width="800px">
+        [Step 2: Distillation]
+      </h2>
+      <br>
+      <img src="static/images/step2.png" alt="method" style="width:100%; max-width:1200px; display:block; margin:auto;"/>
+      <div class="content has-text-justified" style="max-width:1000px; margin:auto;">
+        <p>
+          Distill the memory scores to a reconstruction AD model \(s_\theta\) which has features where the normal–abnormal difference is amplified by directly using the training dataset. However, prolonged training causes over-fitting in pixel-level performance as shown in the graph on the right.
+        </p>
+      </div>
+      <br>
+      <br>
+      <br>
+
+      <h2 class="subtitle has-text-centered">
+        [Step 3: Progressive Data Selection and Finetune]
+      </h2>
+      <br>
+      <img src="static/images/step3.png" alt="method" style="width:100%; max-width:800px; display:block; margin:auto;"/>
+      <div class="content has-text-justified" style="max-width:1000px; margin:auto;">
+        <p>
+          With the distilled model from Step 2, we use the image-level representations to select normal samples progressively and repeat (train – selection) iteratively. Specifically, finetuning is done on the AD model \(s_\theta\) with the progressively selected subset \(\mathcal{S}_t\) by
+        </p>
+        <p style="text-align:center;">
+          \[
+            \min_{\theta}\; \frac{1}{|\mathcal{S}_t|} \sum_{x \in \mathcal{S}_t} s_\theta(x)
+          \]
+        </p>
+        <p>
+          and the \(\mathcal{S}_t\) selection is done by criterion \(\eta_t(x)\) and threshold \(\tau_t\):
+        </p>
+        <p style="text-align:center;">
+          \[
+            \eta_t(x) \;=\; (1 - \alpha_t)\, \max_{h, w} s_{\theta_0}(x)_{hw} \;+\; \alpha_t\, \max_{h, w} s_{\theta}(x)_{hw}, \qquad \alpha_t = \min\!\left(1,\; \tfrac{2t}{T}\right)
+          \]
+        </p>
+        <p style="text-align:center;">
+          \[
+            \tau_t \;=\; \operatorname{Median}\!\left(\eta_t(x)\right) + k_t \cdot \operatorname{MAD}\!\left(\eta_t(x)\right), \qquad k_t = k\!\left(\tfrac{t}{T}\right)
+          \]
+        </p>
+        <p>
+          where \(\max_{h, w} s(x)_{hw}\) is the image-level score, \(s_{\theta_0}\) is the fixed initial model, \(s_\theta\) is the current model, \(T\) is the total number of iterations, and \(\operatorname{MAD}\) is the mean absolute deviation.
+        </p>
+      </div>
+      <br>
+      <br>
+      <br>
+
+
+      <h1 class="subtitle has-text-centered" width="800px">
+        <b>[Results]</b>
+      </h1>
+      <br>
+
+      We use MVTecAD and VisA with 0%, 10%, 20%, and 40% noise ratios with 4 different seeds. For Real-IAD, we follow the protocol provided from the authors.
+
+      <img src="static/images/result1.png" alt="method" style="width:100%; max-width:1000px; display:block; margin:auto;"/>
+      <br>
+      <h2 class="subtitle has-text-centered">
+      </h2>
+      <br>
+      <br>
+      <br>
+
+      <img src="static/images/result2.png" alt="method" style="width:100%; max-width:1000px; display:block; margin:auto;"/>
+      <br>
+      <h2 class="subtitle has-text-centered">
+      </h2>
+      <br>
+      <br>
+      <br>
+
+      <img src="static/images/result3.png" alt="method" style="width:100%; max-width:1000px; display:block; margin:auto;"/>
+      <br>
+      <h2 class="subtitle has-text-centered">
+      </h2>
+      <br>
+      <br>
+      <br>
+
+
+      <h2 class="subtitle has-text-centered">
+        [Ablation study]
+      </h2>
+      <img src="static/images/ablation.png" alt="method" style="width:100%; max-width:700px; display:block; margin:auto;"/>
+      <br>
+      <br>
+      <br>
+
+
+      <h2 class="subtitle has-text-centered">
+        [Active Label Correction]
+      </h2>
+      <br>
+      <img src="static/images/active_label_correction.png" alt="method" style="width:100%; max-width:700px; display:block; margin:auto;"/>
+      <br>
+      <h2 class="subtitle has-text-centered">
+      Active label correction is a process where an AI scans a dataset and ranks the most suspicious or corrupted images at the very top so a human can quickly review and remove them. We use this approach to save annotators from manually checking every single image, and our experiment aims to prove that MeDS, is superior. As shown in the graph, MeDS successfully pushes contaminated data to the top of the review list with higher accuracy than the baseline.
+
+      </h2>
+      <br>
+      <br>
+      <br>
+
+
+
+  </div>
+</section>
+
+
+<!-- Paper poster -->
+<section class="hero is-small is-light">
+  <div class="hero-body">
+    <div class="container">
+      <h2 class="title">Poster</h2>
+      <iframe  src="static/pdfs/TailedCore_poster.pdf" width="100%" height="550">
+      </iframe>
+    </div>
+  </div>
+</section>
+<!--End paper poster -->
+
+
+<!--BibTex citation -->
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+      <h2 class="title">
+      BibTeX
+      </h2>
+      <pre>
+        <code>
+          @inproceedings{jung2025tailedcore,
+            title={{TailedCore}: Few-Shot Sampling for Unsupervised Long-Tail Noisy Anomaly Detection},
+            author={Yoon Gyo Jung and Jaewoo Park and Jaeho Yoon and Kuan-Chuan Peng and Wonchul Kim and Andrew Beng Jin Teoh and Octavia Camps},
+            booktitle={IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)},
+            url={https://arxiv.org/abs/2504.02775},
+            year={2025}
+          }
+        </code>
+      </pre>
+  </div>
+</section>
+<!--End BibTex citation -->
+
+
+<footer class="footer">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            This page was built using the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank">Academic Project Page Template</a> which was adopted from the <a href="https://nerfies.github.io" target="_blank">Nerfies</a> project page.
+            You are free to borrow the source code of this website, we just ask that you link back to this page in the footer. <br> This website is licensed under a <a rel="license"  href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Statcounter tracking code -->
+  
+<!-- You can add a tracker to track page visits by creating an account at statcounter.com -->
+
+    <!-- End of Statcounter Code -->
+
+</body>
+</html>
