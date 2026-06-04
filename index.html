@@ -186,6 +186,33 @@
 <!-- End paper abstract -->
 
 
+<!-- Motivation -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Motivation</h2>
+        <div class="content has-text-justified">
+          <p>
+            Modern factories rely on vision systems to spot defective products automatically. The standard recipe is <em>unsupervised</em> anomaly detection: train a model on images that are all assumed to be <em>normal</em>, then flag anything that deviates at inspection time. This works well &mdash; as long as the training set really is clean.
+          </p>
+          <p>
+            In practice, it never is. Curating and verifying large industrial datasets is expensive, and even careful manual screening lets a non-negligible fraction of defective images slip in unlabeled. Once this <strong>contamination</strong> enters training, the model starts treating defects as &ldquo;normal,&rdquo; and accuracy drops sharply as the noise ratio grows.
+          </p>
+          <p>
+            Existing noise-robust methods only cope partially: they tend to rely on strong assumptions &mdash; knowing the contamination ratio in advance, or how anomalous samples are distributed &mdash; so their best settings shift from one dataset and noise level to the next. That means fragile, per-setting hyperparameter tuning and a steep drop-off under heavy contamination. To our knowledge, no prior method stays accurate at <em>both</em> the image level (<em>is this product defective?</em>) and the pixel level (<em>where is the defect?</em>) across a wide range of noise ratios.
+          </p>
+          <p>
+            <strong>MeDS targets exactly this gap:</strong> robust image- and pixel-level anomaly detection across contamination levels from 0% to 40% &mdash; with no noise-ratio-specific tuning.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End motivation -->
+
+
 <!-- Results / method -->
 <section class="section" id="results">
   <div class="table-container">
@@ -193,10 +220,7 @@
     <h2 class="title is-3 has-text-centered">How MeDS works</h2>
     <div class="content has-text-justified" style="max-width:1000px; margin:auto;">
       <p>
-        To catch defective products automatically, an anomaly detector first learns what &ldquo;normal&rdquo; looks like from a pile of factory images. The problem: in the real world that pile is never perfectly clean &mdash; a few defective images always slip in unlabeled &mdash; and most detectors quietly break down as this contamination grows, unless you already know how much there is and hand-tune for it.
-      </p>
-      <p>
-        <strong>MeDS stays robust across contamination levels with no per-setting tuning</strong>, using a three-step recipe: <strong>(1)</strong> get a rough but noise-resistant read on which samples look suspicious, <strong>(2)</strong> sharpen that signal by distilling it into a small trained network, and <strong>(3)</strong> repeatedly retrain on the cleanest samples it can find &mdash; progressively earning precise, pixel-level defect localization.
+        MeDS reaches that robustness with a three-step recipe: <strong>(1)</strong> get a rough but noise-resistant read on which samples look suspicious, <strong>(2)</strong> sharpen that signal by distilling it into a small trained network, and <strong>(3)</strong> repeatedly retrain on the cleanest samples it can find &mdash; progressively earning precise, pixel-level defect localization. The three steps are detailed below.
       </p>
     </div>
     <br>
