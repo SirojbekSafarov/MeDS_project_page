@@ -202,7 +202,7 @@
     <br>
 
     <h2 class="subtitle has-text-centered">
-      Step 1: Memory Score Construction
+      <strong>Step 1: Memory Score Construction</strong>
     </h2>
     <br>
     <img src="static/images/step1.png" alt="Step 1: Memory Score Construction" style="width:100%; max-width:1000px; display:block; margin:2.25rem auto 0.75rem; align-items:center;"/>
@@ -244,7 +244,7 @@
       <br>
 
       <h2 class="subtitle has-text-centered">
-        Step 2: Distillation
+        <strong>Step 2: Distillation</strong>
       </h2>
       <br>
       <img src="static/images/step2.png" alt="Step 2: Distillation" style="width:100%; max-width:1200px; display:block; margin:2.25rem auto 0.75rem;"/>
@@ -264,7 +264,7 @@
       <br>
 
       <h2 class="subtitle has-text-centered">
-        Step 3: Progressive Data Selection &amp; Fine-tuning
+        <strong>Step 3: Progressive Data Selection &amp; Fine-tuning</strong>
       </h2>
       <br>
       <img src="static/images/step3.png" alt="Step 3: Progressive Data Selection and Finetune" style="width:100%; max-width:800px; display:block; margin:2.25rem auto 0.75rem;"/>
@@ -346,20 +346,6 @@
       </h2>
       <div class="content has-text-justified" style="max-width:1000px; margin:auto;">
         <p>
-          <strong>Robustness to hyperparameters.</strong> A big reason MeDS needs no noise-ratio-specific tuning is that it is <strong>insensitive to most of its hyperparameters</strong>, and a single fixed subsampling ratio works across every noise level. The figure below sweeps the final model&rsquo;s image-level AUROC (top row) and pixel-level P-AP (bottom row) against three hyperparameters, with a separate curve per noise ratio (\(0/10/20/40\%\)):
-        </p>
-        <ul>
-          <li><strong>Ensemble size \(B\) (left).</strong> Both metrics climb steeply from a single memory and flatten by \(B \approx 50\); larger ensembles mainly stabilize the high-noise curves (the \(40\%\) case gains the most). We use \(B = 100\), comfortably inside the saturated region.</li>
-          <li><strong>Subsampling ratio \(\rho\) (middle).</strong> There is a clear peak around \(\rho = 0.1\): too small wastes data, while too large lets anomalous features leak into the memory and erodes the normal&ndash;anomaly gap &mdash; most damaging at \(40\%\) noise. Crucially, the <em>same</em> \(\rho = 0.1\) is best at every noise level, which is exactly why no per-noise tuning is needed (and matches the sweet spot predicted by Theorem&nbsp;1).</li>
-          <li><strong>Distillation iterations \(T\) (right).</strong> Performance rises and then <em>plateaus instead of degrading</em>. This is the payoff of progressive selection: where the distilled-only model of Step&nbsp;2 would start overfitting to noise, fine-tuning on the self-selected clean subset lets the model train far longer safely &mdash; so the exact stopping point no longer matters.</li>
-        </ul>
-      </div>
-      <img src="static/images/ablation.png" alt="Final-model robustness to ensemble size B, subsampling ratio rho, and iterations T across noise levels" style="width:100%; max-width:1000px; display:block; margin:2.25rem auto 0.75rem;"/>
-      <br>
-      <br>
-
-      <div class="content has-text-justified" style="max-width:1000px; margin:auto;">
-        <p>
           <strong>Component ablation (Table 4).</strong> Adding MeDS&rsquo;s three stages one at a time, on top of a Dinomaly backbone, shows that each is necessary. Reading the table top to bottom &mdash; from the bare baseline to the full method &mdash; the metrics improve at every step, and the gains are largest under heavy noise:
         </p>
         <ul>
@@ -372,6 +358,20 @@
         </p>
       </div>
       <img src="static/images/table4_ablation.png" alt="Table 4: component ablation of MeDS on MVTecAD (Dinomaly backbone) across 0-40% noise" style="width:100%; max-width:1000px; display:block; margin:2.25rem auto 0.75rem;"/>
+      <br>
+      <br>
+
+      <div class="content has-text-justified" style="max-width:1000px; margin:auto;">
+        <p>
+          <strong>Robustness to hyperparameters.</strong> A big reason MeDS needs no noise-ratio-specific tuning is that it is <strong>insensitive to most of its hyperparameters</strong>, and a single fixed subsampling ratio works across every noise level. The figure below sweeps the final model&rsquo;s image-level AUROC (top row) and pixel-level P-AP (bottom row) against three hyperparameters, with a separate curve per noise ratio (\(0/10/20/40\%\)):
+        </p>
+        <ul>
+          <li><strong>Ensemble size \(B\) (left).</strong> Both metrics climb steeply from a single memory and flatten by \(B \approx 50\); larger ensembles mainly stabilize the high-noise curves (the \(40\%\) case gains the most). We use \(B = 100\), comfortably inside the saturated region.</li>
+          <li><strong>Subsampling ratio \(\rho\) (middle).</strong> There is a clear peak around \(\rho = 0.1\): too small wastes data, while too large lets anomalous features leak into the memory and erodes the normal&ndash;anomaly gap &mdash; most damaging at \(40\%\) noise. Crucially, the <em>same</em> \(\rho = 0.1\) is best at every noise level, which is exactly why no per-noise tuning is needed (and matches the sweet spot predicted by Theorem&nbsp;1).</li>
+          <li><strong>Distillation iterations \(T\) (right).</strong> Performance rises and then <em>plateaus instead of degrading</em>. This is the payoff of progressive selection: where the distilled-only model of Step&nbsp;2 would start overfitting to noise, fine-tuning on the self-selected clean subset lets the model train far longer safely &mdash; so the exact stopping point no longer matters.</li>
+        </ul>
+      </div>
+      <img src="static/images/ablation.png" alt="Final-model robustness to ensemble size B, subsampling ratio rho, and iterations T across noise levels" style="width:100%; max-width:1000px; display:block; margin:2.25rem auto 0.75rem;"/>
       <br>
       <br>
       <br>
