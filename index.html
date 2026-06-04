@@ -221,6 +221,84 @@
 <!-- End motivation -->
 
 
+<!-- Problem setup -->
+<section class="section hero is-light">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Problem Setup</h2>
+        <div class="content has-text-justified">
+          <p>
+            <strong>Anomaly detection with noisy data.</strong> Conventional anomaly detection assumes the training set contains only normal samples. We drop that assumption: the training set
+          </p>
+          <p style="text-align:center;">
+            \[ \mathcal{D} \;=\; \mathcal{D}_{\text{normal}} \,\cup\, \mathcal{D}_{\text{anomaly}} \]
+          </p>
+          <p>
+            mixes normal images with a set of <em>unlabeled</em> anomalous images \(\mathcal{D}_{\text{anomaly}}\) &mdash; we are never told which image is which. The level of contamination is the <strong>noise ratio</strong>
+          </p>
+          <p style="text-align:center;">
+            \[ \text{noise ratio} \;=\; \frac{\lvert \mathcal{D}_{\text{anomaly}} \rvert}{\lvert \mathcal{D} \rvert}. \]
+          </p>
+          <p>
+            At test time the model must assign a <em>high</em> anomaly score to anomalous inputs and a <em>low</em> score to normal ones &mdash; both at the <strong>image level</strong> (<em>is the product defective?</em>) and at the <strong>pixel level</strong> (<em>which region is defective?</em>). The goal is to do this reliably <strong>without knowing the noise ratio</strong>, across the full range from perfectly clean data to heavy contamination.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End problem setup -->
+
+
+<!-- Preliminaries -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Preliminaries</h2>
+        <div class="content has-text-justified">
+          <p>
+            MeDS builds on two standard anomaly-detection mechanisms.
+          </p>
+          <p>
+            <strong>1. Memory-based AD.</strong> A memory bank \(\mathcal{M}\) stores patch-level features of the training images; a patch is then scored by its distance to the nearest stored feature, so unfamiliar (likely anomalous) patches score high. With a frozen pretrained encoder \(g\) that maps an image \(x\) to a feature map \(g(x) \in \mathbb{R}^{H \times W \times C}\), the memory anomaly score at spatial position \((h,w)\) is
+          </p>
+          <p style="text-align:center;">
+            \[ s_{\mathcal{M}}(x)_{hw} \;=\; \min_{z \in \mathcal{M}} D\!\left(z,\, g(x)_{hw}\right), \]
+          </p>
+          <p>
+            where \(D\) is the Euclidean distance in feature space. The memory is sampled from the pool of <em>all</em> training patch features,
+          </p>
+          <p style="text-align:center;">
+            \[ g(\mathcal{D}) \;:=\; \bigl\{\, g(x)_{hw} \;\bigm|\; x \in \mathcal{D},\; (h,w) \in [H]\times[W] \,\bigr\}, \]
+          </p>
+          <p>
+            typically via coreset subsampling. Because the encoder \(g\) is frozen, this score is robust to noise but only <em>coarse</em>.
+          </p>
+          <p>
+            <strong>2. Teacher&ndash;student (reconstruction) AD.</strong> Here the anomaly score is the disagreement between the frozen teacher \(g\) and a trainable student \(f_\theta\) &mdash; the <em>reconstruction score</em>
+          </p>
+          <p style="text-align:center;">
+            \[ s_{\theta}(x)_{hw} \;=\; D\!\left(g(x)_{hw},\, f_\theta(x)_{hw}\right), \]
+          </p>
+          <p>
+            and the student is trained to minimize it over the training set,
+          </p>
+          <p style="text-align:center;">
+            \[ \min_{\theta}\; \frac{1}{\lvert \mathcal{D} \rvert} \sum_{x \in \mathcal{D}} s_\theta(x). \]
+          </p>
+          <p>
+            The student is deliberately limited in capacity (e.g. a bottleneck decoder), so it reconstructs in-distribution (normal) patterns well and out-of-distribution (anomalous) ones poorly &mdash; making anomalies stand out. MeDS uses the <strong>memory score</strong> as a noise-robust starting signal and the <strong>reconstruction model</strong> as the trainable backbone it then sharpens and fine-tunes.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End preliminaries -->
+
+
 <!-- Results / method -->
 <section class="section" id="results">
   <div class="table-container">
