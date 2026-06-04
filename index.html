@@ -207,7 +207,7 @@
           </p>
           <ul>
             <li><strong>No noise-ratio-specific tuning.</strong> A single fixed configuration works from perfectly clean data all the way up to 40% contamination &mdash; there is no need to know, estimate, or tune for the noise ratio.</li>
-            <li><strong>Robustness at both levels.</strong> It stays accurate for image-level detection (<em>is this product defective?</em>) <em>and</em> pixel-level localization (<em>where is the defect?</em>), instead of trading one off against the other as earlier methods do.</li>
+            <li><strong>Robustness at both levels.</strong> It stays accurate at the image and pixel level at once, instead of trading one off against the other as earlier methods do.</li>
             <li><strong>Strong performance under heavy noise.</strong> On MVTecAD it holds <strong>99.16%</strong> image-level AUROC even at a 40% noise ratio, and it sets a new state of the art on VisA and Real-IAD under contamination.</li>
           </ul>
           <p>
@@ -229,7 +229,7 @@
         <h2 class="title is-3">Problem Setup</h2>
         <div class="content has-text-justified">
           <p>
-            <strong>Anomaly detection with noisy data.</strong> Conventional anomaly detection assumes the training set contains only normal samples. We drop that assumption: the training set
+            <strong>Anomaly detection with noisy data.</strong> To formalize the setting above: unlike conventional anomaly detection, whose training set is assumed clean, here the training set
           </p>
           <p style="text-align:center;">
             \[ \mathcal{D} \;=\; \mathcal{D}_{\text{normal}} \,\cup\, \mathcal{D}_{\text{anomaly}} \]
@@ -241,7 +241,7 @@
             \[ \text{noise ratio} \;=\; \frac{\lvert \mathcal{D}_{\text{anomaly}} \rvert}{\lvert \mathcal{D} \rvert}. \]
           </p>
           <p>
-            At test time the model must assign a <em>high</em> anomaly score to anomalous inputs and a <em>low</em> score to normal ones &mdash; both at the <strong>image level</strong> (<em>is the product defective?</em>) and at the <strong>pixel level</strong> (<em>which region is defective?</em>). The goal is to do this reliably <strong>without knowing the noise ratio</strong>, across the full range from perfectly clean data to heavy contamination.
+            At test time the model must assign a <em>high</em> anomaly score to anomalous inputs and a <em>low</em> score to normal ones, producing both an <strong>image-level</strong> score (one value per image) and a <strong>pixel-level</strong> score map (one value per spatial location). The goal is to do this reliably <strong>without knowing the noise ratio</strong>, across the full range from clean data to heavy contamination.
           </p>
         </div>
       </div>
