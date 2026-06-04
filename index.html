@@ -4,29 +4,30 @@
   <meta charset="utf-8">
   <!-- Meta tags for social media banners, these should be filled in appropriatly as they are your "business card" -->
   <!-- Replace the content tag with appropriate information -->
-  <meta name="description" content="MeDS">
-  <meta property="og:title" content="MeDS"/>
-  <meta property="og:description" content="MeDS"/>
-  <meta property="og:url" content="URL OF THE WEBSITE"/>
+  <meta name="description" content="Memory-Distilled Selection (MeDS): a noise-robust data-selection training algorithm for unsupervised anomaly detection under data contamination.">
+  <meta property="og:title" content="MeDS: Memory-Distilled Selection for Noise-Robust Anomaly Detection"/>
+  <meta property="og:description" content="Memory-Distilled Selection (MeDS): a noise-robust data-selection training algorithm for unsupervised anomaly detection under data contamination."/>
+  <meta property="og:url" content="https://sirojbeksafarov.github.io/MeDS/"/>
   <!-- Path to banner image, should be in the path listed below. Optimal dimenssions are 1200X630-->
-  <meta property="og:image" content="static/image/your_banner_image.png" />
+  <meta property="og:image" content="static/images/pipeline.png" />
   <meta property="og:image:width" content="1200"/>
   <meta property="og:image:height" content="630"/>
 
 
-  <meta name="twitter:title" content="MeDS">
-  <meta name="twitter:description" content="MeDS">
+  <meta name="twitter:title" content="MeDS: Memory-Distilled Selection for Noise-Robust Anomaly Detection">
+  <meta name="twitter:description" content="Memory-Distilled Selection (MeDS): a noise-robust data-selection training algorithm for unsupervised anomaly detection under data contamination.">
   <!-- Path to banner image, should be in the path listed below. Optimal dimenssions are 1200X600-->
-  <meta name="twitter:image" content="static/images/your_twitter_banner_image.png">
+  <meta name="twitter:image" content="static/images/pipeline.png">
   <meta name="twitter:card" content="summary_large_image">
   <!-- Keywords for your paper to be indexed by-->
-  <meta name="keywords" content="KEYWORDS SHOULD BE PLACED HERE">
+  <meta name="keywords" content="Anomaly Detection, Noise-Robust Anomaly Detection, Data Contamination, Unsupervised Learning, Industrial Inspection, Memory Bank, MVTec AD, VisA, Real-IAD, MeDS">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
   <title>Memory-Distilled Selection for Noise-Robust Anomaly Detection
   </title>
-  <link rel="icon" type="image/x-icon" href="static/images/icon.ico">
+  <!-- TODO: add a favicon at static/images/icon.ico (file currently missing). Re-enable the line below once it exists. -->
+  <!-- <link rel="icon" type="image/x-icon" href="static/images/icon.ico"> -->
   <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
   rel="stylesheet">
 
@@ -39,7 +40,6 @@
   <link rel="stylesheet" href="static/css/index.css">
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://documentcloud.adobe.com/view-sdk/main.js"></script>
   <script defer src="static/js/fontawesome.all.min.js"></script>
   <script src="static/js/bulma-carousel.min.js"></script>
   <script src="static/js/bulma-slider.min.js"></script>
@@ -81,13 +81,13 @@
                 <a href="https://www.linkedin.com/in/kuanchuanpeng/" target="_blank">Kuan-Chuan Peng</a>,
               </span>
               <span class="author-block">
-                <a href="https://www.linkedin.com/in/kim-wonchul-12271b117/">Wonchul Kim</a>,
+                <a href="https://www.linkedin.com/in/kim-wonchul-12271b117/" target="_blank">Wonchul Kim</a>,
               </span>
               <span class="author-block">
-                <a href="https://www.linkedin.com/in/seongdeok-bang-603376191/">Seongdeok Bang</a>,
+                <a href="https://www.linkedin.com/in/seongdeok-bang-603376191/" target="_blank">Seongdeok Bang</a>,
               </span>
               <span class="author-block">
-                <a href="https://www.linkedin.com/in/octavia-camps-216b2616/">Octavia Camps</a>,
+                <a href="https://www.linkedin.com/in/octavia-camps-216b2616/" target="_blank">Octavia Camps</a>,
               </span>
             </div>
 
@@ -101,7 +101,7 @@
                     <div class="publication-links">
                          <!-- Arxiv PDF link -->
                       <span class="link-block">
-                        <a href="https://arxiv.org/abs/2504.02775" target="_blank"
+                        <a href="https://arxiv.org/pdf/2605.26676v1" target="_blank"
                         class="external-link button is-normal is-rounded is-dark">
                         <span class="icon">
                           <i class="fas fa-file-pdf"></i>
@@ -113,7 +113,7 @@
 
                   <!-- Github link -->
                   <span class="link-block">
-                    <a href="https://github.com/jungyg/TailedCore" target="_blank"
+                    <a href="https://github.com/SirojbekSafarov/MeDS" target="_blank"
                     class="external-link button is-normal is-rounded is-dark">
                     <span class="icon">
                       <i class="fab fa-github"></i>
@@ -123,15 +123,17 @@
                 </span>
 
                 <!-- ArXiv abstract Link -->
-                <!-- <span class="link-block">
-                  <a href="https://arxiv.org/abs/2504.02775" target="_blank"
+                <!--
+                <span class="link-block">
+                  <a href="https://arxiv.org/abs/2605.26676" target="_blank"
                   class="external-link button is-normal is-rounded is-dark">
                   <span class="icon">
                     <i class="ai ai-arxiv"></i>
                   </span>
-                  <span>arXiv</span> -->
-                </a>
-              </span>
+                  <span>arXiv</span>
+                  </a>
+                </span>
+                -->
             </div>
           </div>
         </div>
@@ -144,7 +146,7 @@
 <section class="hero teaser">
   <div class="container is-max-desktop">
     <div class="hero-body">
-      <img src="static/images/pipeline.png" alt="MY ALT TEXT"/>
+      <img src="static/images/pipeline.png" alt="Overview of the MeDS pipeline (3 steps)"/>
       <h2 class="subtitle has-text-centered">
         Pipeline of MeDS consisted of 3 steps.
       </h2>
@@ -173,11 +175,11 @@
             samples. The aggregated distances to the bootstrapped memories are then distilled 
             into a reconstruction score network, which is subsequently fine-tuned on clean data 
             filtered using scores from the distilled model, enabling fine-grained localization of 
-            anomalies. MeDS~is robust across a wide range of noise ratios without requiring 
+            anomalies. MeDS is robust across a wide range of noise ratios without requiring
             noise-ratio-specific hyperparameter tuning, achieving 99.16% image-level AUROC 
             on MVTecAD at a 40% noise ratio, and attaining state-of-the-art performance on 
-            both VisA and Real-IAD under noisy settings. We thoroughly verify the efficacy of 
-            MeDS on industrial AD benchmarks under noisy data scenarios, accompanied by in-depth 
+            both VisA and Real-IAD under noisy settings. We thoroughly verify the efficacy of
+            MeDS on industrial AD benchmarks under noisy data scenarios, accompanied by in-depth
             empirical analyses.
           </p>
         </div>
@@ -196,7 +198,7 @@
       [Step 1: Memory Score Construction] 
     </h2>
     <br>
-    <img src="static/images/step1.png" alt="method" style="width:100%; max-width:1000px; display:block; margin:auto; align-items:center;"/>
+    <img src="static/images/step1.png" alt="Step 1: Memory Score Construction" style="width:100%; max-width:1000px; display:block; margin:auto; align-items:center;"/>
       <div class="content has-text-justified" style="max-width:1000px; margin:auto;">
         <p>
           Subsample \(\rho = 0.1\) of feature set \(g(\mathcal{D})\) \(B\) times, resulting in \(\{\mathcal{M}_1, \ldots, \mathcal{M}_B\}\), and ensemble them. With an appropriate subsampling ratio, the sparse nature of the memory ensemble acts as a low-pass filter (explained in Theorem 1) and separates normal and anomalous features. However, these features aren’t directly trained by the AD dataset and show limited feature representation.
@@ -231,11 +233,11 @@
       <br>
       <br>
 
-      <h2 class="subtitle has-text-centered" width="800px">
+      <h2 class="subtitle has-text-centered">
         [Step 2: Distillation]
       </h2>
       <br>
-      <img src="static/images/step2.png" alt="method" style="width:100%; max-width:1200px; display:block; margin:auto;"/>
+      <img src="static/images/step2.png" alt="Step 2: Distillation" style="width:100%; max-width:1200px; display:block; margin:auto;"/>
       <div class="content has-text-justified" style="max-width:1000px; margin:auto;">
         <p>
           Distill the memory scores to a reconstruction AD model \(s_\theta\) which has features where the normal–abnormal difference is amplified by directly using the training dataset. However, prolonged training causes over-fitting in pixel-level performance as shown in the graph on the right.
@@ -249,7 +251,7 @@
         [Step 3: Progressive Data Selection and Finetune]
       </h2>
       <br>
-      <img src="static/images/step3.png" alt="method" style="width:100%; max-width:800px; display:block; margin:auto;"/>
+      <img src="static/images/step3.png" alt="Step 3: Progressive Data Selection and Finetune" style="width:100%; max-width:800px; display:block; margin:auto;"/>
       <div class="content has-text-justified" style="max-width:1000px; margin:auto;">
         <p>
           With the distilled model from Step 2, we use the image-level representations to select normal samples progressively and repeat (train – selection) iteratively. Specifically, finetuning is done on the AD model \(s_\theta\) with the progressively selected subset \(\mathcal{S}_t\) by
@@ -281,14 +283,18 @@
       <br>
 
 
-      <h1 class="subtitle has-text-centered" width="800px">
+      <h2 class="subtitle has-text-centered">
         <b>[Results]</b>
-      </h1>
+      </h2>
       <br>
 
-      We use MVTecAD and VisA with 0%, 10%, 20%, and 40% noise ratios with 4 different seeds. For Real-IAD, we follow the protocol provided from the authors.
+      <div class="content has-text-justified" style="max-width:1000px; margin:auto;">
+        <p>
+          We use MVTecAD and VisA with 0%, 10%, 20%, and 40% noise ratios with 4 different seeds. For Real-IAD, we follow the protocol provided from the authors.
+        </p>
+      </div>
 
-      <img src="static/images/result1.png" alt="method" style="width:100%; max-width:1000px; display:block; margin:auto;"/>
+      <img src="static/images/result1.png" alt="MeDS quantitative results (table 1)" style="width:100%; max-width:1000px; display:block; margin:auto;"/>
       <br>
       <h2 class="subtitle has-text-centered">
       </h2>
@@ -296,7 +302,7 @@
       <br>
       <br>
 
-      <img src="static/images/result2.png" alt="method" style="width:100%; max-width:1000px; display:block; margin:auto;"/>
+      <img src="static/images/result2.png" alt="MeDS quantitative results (table 2)" style="width:100%; max-width:1000px; display:block; margin:auto;"/>
       <br>
       <h2 class="subtitle has-text-centered">
       </h2>
@@ -304,7 +310,7 @@
       <br>
       <br>
 
-      <img src="static/images/result3.png" alt="method" style="width:100%; max-width:1000px; display:block; margin:auto;"/>
+      <img src="static/images/result3.png" alt="MeDS qualitative results (table 3)" style="width:100%; max-width:1000px; display:block; margin:auto;"/>
       <br>
       <h2 class="subtitle has-text-centered">
       </h2>
@@ -316,7 +322,7 @@
       <h2 class="subtitle has-text-centered">
         [Ablation study]
       </h2>
-      <img src="static/images/ablation.png" alt="method" style="width:100%; max-width:700px; display:block; margin:auto;"/>
+      <img src="static/images/ablation.png" alt="Ablation study" style="width:100%; max-width:700px; display:block; margin:auto;"/>
       <br>
       <br>
       <br>
@@ -326,12 +332,13 @@
         [Active Label Correction]
       </h2>
       <br>
-      <img src="static/images/active_label_correction.png" alt="method" style="width:100%; max-width:700px; display:block; margin:auto;"/>
+      <img src="static/images/active_label_correction.png" alt="Active label correction results" style="width:100%; max-width:700px; display:block; margin:auto;"/>
       <br>
-      <h2 class="subtitle has-text-centered">
-      Active label correction is a process where an AI scans a dataset and ranks the most suspicious or corrupted images at the very top so a human can quickly review and remove them. We use this approach to save annotators from manually checking every single image, and our experiment aims to prove that MeDS, is superior. As shown in the graph, MeDS successfully pushes contaminated data to the top of the review list with higher accuracy than the baseline.
-
-      </h2>
+      <div class="content has-text-justified" style="max-width:700px; margin:auto;">
+        <p>
+          Active label correction is a process where an AI scans a dataset and ranks the most suspicious or corrupted images at the very top so a human can quickly review and remove them. We use this approach to save annotators from manually checking every single image, and our experiment aims to prove that MeDS is superior. As shown in the graph, MeDS successfully pushes contaminated data to the top of the review list with higher accuracy than the baseline.
+        </p>
+      </div>
       <br>
       <br>
       <br>
@@ -347,7 +354,7 @@
   <div class="hero-body">
     <div class="container">
       <h2 class="title">Poster</h2>
-      <iframe  src="static/pdfs/TailedCore_poster.pdf" width="100%" height="550">
+      <iframe  src="static/pdfs/MeDS_poster.pdf" width="100%" height="550">
       </iframe>
     </div>
   </div>
@@ -363,12 +370,12 @@
       </h2>
       <pre>
         <code>
-          @inproceedings{jung2025tailedcore,
-            title={{TailedCore}: Few-Shot Sampling for Unsupervised Long-Tail Noisy Anomaly Detection},
-            author={Yoon Gyo Jung and Jaewoo Park and Jaeho Yoon and Kuan-Chuan Peng and Wonchul Kim and Andrew Beng Jin Teoh and Octavia Camps},
-            booktitle={IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)},
-            url={https://arxiv.org/abs/2504.02775},
-            year={2025}
+          @inproceedings{safarov2026meds,
+            title={{MeDS}: Memory-Distilled Selection for Noise-Robust Anomaly Detection},
+            author={Sirojbek Safarov and Jaewoo Park and Yoon Gyo Jung and Kuan-Chuan Peng and Wonchul Kim and Seongdeok Bang and Octavia Camps},
+            booktitle={International Conference on Machine Learning (ICML)},
+            url={https://arxiv.org/abs/2605.26676},
+            year={2026}
           }
         </code>
       </pre>
