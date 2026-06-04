@@ -144,7 +144,7 @@
     <div class="hero-body">
       <img src="static/images/pipeline.png" alt="Overview of the MeDS pipeline (3 steps)"/>
       <h2 class="subtitle has-text-centered">
-        Pipeline of MeDS consisted of 3 steps.
+        The MeDS pipeline, in three steps.
       </h2>
     </div>
   </div>
@@ -202,7 +202,7 @@
     <br>
 
     <h2 class="subtitle has-text-centered">
-      [Step 1: Memory Score Construction]
+      Step 1: Memory Score Construction
     </h2>
     <br>
     <img src="static/images/step1.png" alt="Step 1: Memory Score Construction" style="width:100%; max-width:1000px; display:block; margin:auto; align-items:center;"/>
@@ -244,7 +244,7 @@
       <br>
 
       <h2 class="subtitle has-text-centered">
-        [Step 2: Distillation]
+        Step 2: Distillation
       </h2>
       <br>
       <img src="static/images/step2.png" alt="Step 2: Distillation" style="width:100%; max-width:1200px; display:block; margin:auto;"/>
@@ -264,7 +264,7 @@
       <br>
 
       <h2 class="subtitle has-text-centered">
-        [Step 3: Progressive Data Selection and Finetune]
+        Step 3: Progressive Data Selection &amp; Fine-tuning
       </h2>
       <br>
       <img src="static/images/step3.png" alt="Step 3: Progressive Data Selection and Finetune" style="width:100%; max-width:800px; display:block; margin:auto;"/>
@@ -299,8 +299,8 @@
       <br>
 
 
-      <h2 class="subtitle has-text-centered">
-        <b>[Results]</b>
+      <h2 class="title is-3 has-text-centered">
+        Results
       </h2>
       <br>
 
@@ -341,20 +341,28 @@
       <br>
 
 
-      <h2 class="subtitle has-text-centered">
-        [Ablation &amp; Hyperparameter Analysis]
+      <h2 class="title is-3 has-text-centered">
+        Ablation &amp; Hyperparameter Analysis
       </h2>
       <div class="content has-text-justified" style="max-width:900px; margin:auto;">
         <p>
-          A big reason MeDS needs no noise-ratio-specific tuning is that it is <strong>insensitive to most of its hyperparameters</strong>, and a single fixed subsampling ratio works across every noise level. Sweeping the final model across noise levels shows three things:
+          <strong>Robustness to hyperparameters.</strong> A big reason MeDS needs no noise-ratio-specific tuning is that it is <strong>insensitive to most of its hyperparameters</strong>, and a single fixed subsampling ratio works across every noise level. The figure below sweeps the final model&rsquo;s image-level AUROC (top row) and pixel-level P-AP (bottom row) against three hyperparameters, with a separate curve per noise ratio (\(0/10/20/40\%\)):
         </p>
         <ul>
-          <li><strong>Ensemble size \(B\) (left):</strong> adding more bootstrapped memories helps and then saturates &mdash; we simply use \(B = 100\).</li>
-          <li><strong>Subsampling ratio \(\rho\) (middle):</strong> there is a clear sweet spot around \(\rho = 0.1\); too large a ratio hurts, especially under heavy noise &mdash; exactly the behavior Theorem&nbsp;1 predicts.</li>
-          <li><strong>Distillation iterations \(T\) (right):</strong> performance rises and then <em>plateaus instead of degrading</em>, because progressive selection lets the model train for long without overfitting to noise &mdash; removing the Step&nbsp;2 trade-off entirely.</li>
+          <li><strong>Ensemble size \(B\) (left).</strong> Both metrics climb steeply from a single memory and flatten by \(B \approx 50\); larger ensembles mainly stabilize the high-noise curves (the \(40\%\) case gains the most). We use \(B = 100\), comfortably inside the saturated region.</li>
+          <li><strong>Subsampling ratio \(\rho\) (middle).</strong> There is a clear peak around \(\rho = 0.1\): too small wastes data, while too large lets anomalous features leak into the memory and erodes the normal&ndash;anomaly gap &mdash; most damaging at \(40\%\) noise. Crucially, the <em>same</em> \(\rho = 0.1\) is best at every noise level, which is exactly why no per-noise tuning is needed (and matches the sweet spot predicted by Theorem&nbsp;1).</li>
+          <li><strong>Distillation iterations \(T\) (right).</strong> Performance rises and then <em>plateaus instead of degrading</em>. This is the payoff of progressive selection: where the distilled-only model of Step&nbsp;2 would start overfitting to noise, fine-tuning on the self-selected clean subset lets the model train far longer safely &mdash; so the exact stopping point no longer matters.</li>
         </ul>
         <p>
-          Separately, the paper&rsquo;s component ablation confirms that each stage &mdash; the memory ensemble, distillation, and progressive fine-tuning &mdash; is necessary: dropping any one measurably hurts.
+          <strong>Component ablation.</strong> The paper also adds MeDS&rsquo;s three stages one at a time (on top of a Dinomaly backbone) to show that each is necessary:
+        </p>
+        <ul>
+          <li>The <strong>bootstrapped memory ensemble</strong> alone sharply improves image-level robustness under noise, but its pixel-level localization stays limited &mdash; it relies on frozen features.</li>
+          <li><strong>Distillation</strong> transfers that coarse robustness into a trainable network and refines its features, giving consistent gains across <em>all</em> metrics.</li>
+          <li><strong>Progressive fine-tuning</strong> improves both levels further, with the largest jump on the pixel-level P-AP metric &mdash; precise segmentation without overfitting to the contaminated samples.</li>
+        </ul>
+        <p>
+          Isolating the fine-tuning design confirms both halves matter: using the <em>distilled</em> model for both initialization and sample selection beats using the raw memory ensemble or a randomly-initialized model.
         </p>
       </div>
       <img src="static/images/ablation.png" alt="Final-model robustness to ensemble size B, subsampling ratio rho, and iterations T across noise levels" style="width:100%; max-width:900px; display:block; margin:auto;"/>
@@ -363,8 +371,8 @@
       <br>
 
 
-      <h2 class="subtitle has-text-centered">
-        [Active Label Correction]
+      <h2 class="title is-3 has-text-centered">
+        Active Label Correction
       </h2>
       <br>
       <img src="static/images/active_label_correction.png" alt="Active label correction results" style="width:100%; max-width:700px; display:block; margin:auto;"/>
