@@ -32,8 +32,6 @@
   rel="stylesheet">
 
   <link rel="stylesheet" href="static/css/bulma.min.css">
-  <link rel="stylesheet" href="static/css/bulma-carousel.min.css">
-  <link rel="stylesheet" href="static/css/bulma-slider.min.css">
   <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
   <link rel="stylesheet"
   href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
@@ -41,8 +39,6 @@
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script defer src="static/js/fontawesome.all.min.js"></script>
-  <script src="static/js/bulma-carousel.min.js"></script>
-  <script src="static/js/bulma-slider.min.js"></script>
   <script src="static/js/index.js"></script>
 
   <!-- MathJax for LaTeX rendering -->
@@ -153,7 +149,7 @@
     </div>
   </div>
 </section>
-<!-- End teaser video -->
+<!-- End teaser -->
 
 <!-- Paper abstract -->
 <section class="section hero is-light">
@@ -190,43 +186,57 @@
 <!-- End paper abstract -->
 
 
-<!-- Image carousel -->
+<!-- Results / method -->
 <section class="section" id="results">
   <div class="table-container">
-    <!-- Your image here -->
+
+    <h2 class="title is-3 has-text-centered">How MeDS works</h2>
+    <div class="content has-text-justified" style="max-width:1000px; margin:auto;">
+      <p>
+        To catch defective products automatically, an anomaly detector first learns what &ldquo;normal&rdquo; looks like from a pile of factory images. The problem: in the real world that pile is never perfectly clean &mdash; a few defective images always slip in unlabeled &mdash; and most detectors quietly break down as this contamination grows, unless you already know how much there is and hand-tune for it.
+      </p>
+      <p>
+        <strong>MeDS stays robust across contamination levels with no per-setting tuning</strong>, using a three-step recipe: <strong>(1)</strong> get a rough but noise-resistant read on which samples look suspicious, <strong>(2)</strong> sharpen that signal by distilling it into a small trained network, and <strong>(3)</strong> repeatedly retrain on the cleanest samples it can find &mdash; progressively earning precise, pixel-level defect localization.
+      </p>
+    </div>
+    <br>
+
     <h2 class="subtitle has-text-centered">
-      [Step 1: Memory Score Construction] 
+      [Step 1: Memory Score Construction]
     </h2>
     <br>
     <img src="static/images/step1.png" alt="Step 1: Memory Score Construction" style="width:100%; max-width:1000px; display:block; margin:auto; align-items:center;"/>
       <div class="content has-text-justified" style="max-width:1000px; margin:auto;">
         <p>
-          Subsample \(\rho = 0.1\) of feature set \(g(\mathcal{D})\) \(B\) times, resulting in \(\{\mathcal{M}_1, \ldots, \mathcal{M}_B\}\), and ensemble them. With an appropriate subsampling ratio, the sparse nature of the memory ensemble acts as a low-pass filter (explained in Theorem 1) and separates normal and anomalous features. However, these features aren’t directly trained by the AD dataset and show limited feature representation.
-
+          <strong>The idea.</strong> A memory bank stores little snapshots (patch features) of the training images. To score a new patch, we measure how far it is from its nearest neighbor in the memory &mdash; far away means &ldquo;unfamiliar,&rdquo; which usually means a defect. The catch under noisy data: if defective patches sneak into the memory, defects start to look normal and the detector is fooled.
+        </p>
+        <p>
+          <strong>Our fix.</strong> Instead of one big memory, we build an <em>ensemble</em> of \(B\) small memories, each from a different random \(10\%\) subsample of the features, and average their scores. Because each memory is sparse, it only reliably captures the patterns that show up <em>often</em> &mdash; the normal ones &mdash; and &ldquo;blurs out&rdquo; rare defect patterns. In short, sparse subsampling acts like a <strong>low-pass filter</strong>: defects end up far from every memory and stand out, whether contamination is light or heavy.
         </p>
         <p style="text-align:center;">
           \[
-            S_{\mathbb{M}}(x) \;=\; \frac{1}{\mathcal{B}} \sum_{b=1}^{\mathcal{B}} s_{\mathcal{M}_b}(x)
+            S_{\mathbb{M}}(x) \;=\; \frac{1}{B} \sum_{b=1}^{B} s_{\mathcal{M}_b}(x)
           \]
         </p>
         <p>
-          <strong>Theorem 1.</strong> Under a regularity condition, for any anomaly patch features \(q_{\text{anom}}\) and normal patch features \(q_{\text{norm}}\), the expected gap
+          <strong>Why there is a sweet spot (Theorem 1).</strong> Make the memory too large and defects leak in and look normal; too small and even ordinary patches look unfamiliar. Theorem&nbsp;1 makes this precise: the expected gap between how far <em>anomalous</em> vs. <em>normal</em> patches sit from the memory,
         </p>
         <p style="text-align:center;">
           \[
-            \Delta(m) \;:=\; \mathbb{E}\!\left[D(q_{\text{anom}}, \mathcal{M})\right] - \mathbb{E}\!\left[D(q_{\text{norm}}, \mathcal{M})\right]
+            \Delta(m) \;:=\; \mathbb{E}\!\left[D(q_{\text{anom}}, \mathcal{M})\right] - \mathbb{E}\!\left[D(q_{\text{norm}}, \mathcal{M})\right],
           \]
         </p>
         <p>
-          satisfies \(\Delta(m) > 0\) and is decomposed into a second-order Taylor approximation \(\Delta_0\) with remainder \(\epsilon_0(m)\): \(\Delta(m) = \Delta_0(m) + \epsilon_0(m)\), where
+          is always positive and is maximized at a moderate memory size \(m\) (formally, it is governed by a weight function that is <em>unimodal</em> in \(m\)). So there is an appropriate subsampling ratio that drives normal and abnormal features as far apart as possible.
         </p>
-        <p style="text-align:center;">
-          \[
-            \Delta_0(m) \;=\; \int_0^{\infty} \delta(r) \cdot \omega(m, r)\, dr
-          \]
-        </p>
+      </div>
+      <img src="static/images/theorem1.png" alt="Normal vs. anomaly score separation and AUROC across subsampling ratios at 10/20/40% noise" style="width:100%; max-width:1000px; display:block; margin:auto;"/>
+      <p class="has-text-centered is-size-7" style="max-width:1000px; margin:auto;">
+        <em>Theorem&nbsp;1 in practice (at \(10\%/20\%/40\%\) noise): the gap between normal (blue) and anomaly (red) scores &mdash; and the resulting AUROC (green) &mdash; peaks at a small-to-moderate subsampling ratio, exactly the predicted sweet spot.</em>
+      </p>
+      <div class="content has-text-justified" style="max-width:1000px; margin:auto;">
         <p>
-          with a weight function \(\omega(m, r)\) that is unimodal with respect to \(m\). The expectation \(\mathbb{E}\) is over the memory \(\mathcal{M}\) that is randomly subsampled from the extracted feature set \(g(\mathcal{D})\) with the constraint \(|\mathcal{M}| = m\). There is an appropriate sampling ratio maximizing the normal–abnormal gap.
+          One limitation: these features come from a <em>frozen, general-purpose</em> encoder, so this read is only <em>coarse</em> &mdash; good enough to flag which images are contaminated, but not yet precise enough to outline a defect pixel by pixel. Steps&nbsp;2 and&nbsp;3 fix that.
         </p>
       </div>
       <br>
@@ -240,7 +250,13 @@
       <img src="static/images/step2.png" alt="Step 2: Distillation" style="width:100%; max-width:1200px; display:block; margin:auto;"/>
       <div class="content has-text-justified" style="max-width:1000px; margin:auto;">
         <p>
-          Distill the memory scores to a reconstruction AD model \(s_\theta\) which has features where the normal–abnormal difference is amplified by directly using the training dataset. However, prolonged training causes over-fitting in pixel-level performance as shown in the graph on the right.
+          <strong>The idea.</strong> The Step&nbsp;1 scores are robust but coarse, because they rely on a frozen encoder. So we train a small <em>student</em> network (a reconstruction model \(s_\theta\)) to reproduce the memory scores &mdash; but now learning directly from the factory images, so it picks up domain-specific detail the frozen encoder missed and <strong>amplifies the gap</strong> between normal and defective patches.
+        </p>
+        <p>
+          <strong>Why it doesn&rsquo;t just memorize the defects too.</strong> Neural networks learn the dominant, repeated patterns first and only memorize rare ones later (the &ldquo;early-learning&rdquo; effect). Since normal patches are the majority, the student lowers their scores earlier and more than the rare defective ones &mdash; effectively <em>denoising</em> the memory signal for free.
+        </p>
+        <p>
+          <strong>The catch.</strong> Train too long and the network eventually memorizes the defects as well, hurting fine pixel-level accuracy; stop too early and it is under-trained for precise localization (see the graph on the right). Distillation alone can&rsquo;t have it both ways &mdash; which is exactly what Step&nbsp;3 resolves.
         </p>
       </div>
       <br>
@@ -254,7 +270,7 @@
       <img src="static/images/step3.png" alt="Step 3: Progressive Data Selection and Finetune" style="width:100%; max-width:800px; display:block; margin:auto;"/>
       <div class="content has-text-justified" style="max-width:1000px; margin:auto;">
         <p>
-          With the distilled model from Step 2, we use the image-level representations to select normal samples progressively and repeat (train – selection) iteratively. Specifically, finetuning is done on the AD model \(s_\theta\) with the progressively selected subset \(\mathcal{S}_t\) by
+          <strong>The idea.</strong> Use the Step&nbsp;2 model to pick out the cleanest-looking images and fine-tune <em>only</em> on those. This lets the model keep training &mdash; getting sharper at outlining defects &mdash; without ever overfitting to the contaminated samples. We alternate <em>(select &rarr; train)</em>, fine-tuning \(s_\theta\) on the progressively selected clean subset \(\mathcal{S}_t\):
         </p>
         <p style="text-align:center;">
           \[
@@ -262,7 +278,7 @@
           \]
         </p>
         <p>
-          and the \(\mathcal{S}_t\) selection is done by criterion \(\eta_t(x)\) and threshold \(\tau_t\):
+          <strong>Selection that self-corrects.</strong> A sample is kept when its score \(\eta_t(x)\) falls below a threshold \(\tau_t\). Early on, selection trusts the original distilled model and keeps only clearly-normal samples; as training improves, it leans on the current model and admits more samples &mdash; a positive feedback loop where a better model yields a cleaner subset, which in turn yields a better model.
         </p>
         <p style="text-align:center;">
           \[
@@ -275,7 +291,7 @@
           \]
         </p>
         <p>
-          where \(\max_{h, w} s(x)_{hw}\) is the image-level score, \(s_{\theta_0}\) is the fixed initial model, \(s_\theta\) is the current model, \(T\) is the total number of iterations, and \(\operatorname{MAD}\) is the mean absolute deviation.
+          Here \(\max_{h,w} s(x)_{hw}\) is the image-level score, \(s_{\theta_0}\) is the fixed initial (distilled) model and \(s_\theta\) the current one, \(\alpha_t\) gradually shifts trust from the initial to the current model over the \(T\) iterations, and the threshold \(\tau_t\) &mdash; built from the robust median and \(\operatorname{MAD}\) (median absolute deviation) &mdash; loosens as \(k_t\) grows. The payoff: precise pixel-level localization that stays robust at any contamination level, with no noise-specific tuning.
         </p>
       </div>
       <br>
@@ -290,39 +306,58 @@
 
       <div class="content has-text-justified" style="max-width:1000px; margin:auto;">
         <p>
-          We use MVTecAD and VisA with 0%, 10%, 20%, and 40% noise ratios with 4 different seeds. For Real-IAD, we follow the protocol provided from the authors.
+          We evaluate MeDS on three industrial benchmarks &mdash; <strong>MVTecAD</strong>, <strong>VisA</strong>, and <strong>Real-IAD</strong> &mdash; under contamination, following each dataset&rsquo;s noisy-data protocol (MVTecAD at \(10/20/40\%\) noise, VisA at \(2/5/10\%\), plus the clean \(0\%\) case, and the official noisy setting for Real-IAD). The takeaway: where prior methods degrade as contamination rises, MeDS holds its accuracy &mdash; reaching <strong>99.16% image-level AUROC on MVTecAD even at 40% noise</strong> &mdash; and sets state-of-the-art on VisA and Real-IAD under noise. It also works as a <em>plug-in</em>: dropped on top of existing detectors (HVQ, Dinomaly, INP-Former), it boosts their noise robustness with almost no cost on clean data.
         </p>
       </div>
 
-      <img src="static/images/result1.png" alt="MeDS quantitative results (table 1)" style="width:100%; max-width:1000px; display:block; margin:auto;"/>
-      <br>
-      <h2 class="subtitle has-text-centered">
-      </h2>
-      <br>
-      <br>
-      <br>
-
-      <img src="static/images/result2.png" alt="MeDS quantitative results (table 2)" style="width:100%; max-width:1000px; display:block; margin:auto;"/>
-      <br>
-      <h2 class="subtitle has-text-centered">
-      </h2>
+      <img src="static/images/result1.png" alt="Table 1: results on MVTecAD across 0-40% noise" style="width:100%; max-width:1000px; display:block; margin:auto;"/>
+      <div class="content has-text-justified" style="max-width:1000px; margin:auto;">
+        <p>
+          <strong>Table 1 &mdash; MVTecAD.</strong> Image-level (I-AUROC, I-AP) and pixel-level (P-AUPRO, P-AP) scores at \(0\!-\!40\%\) noise. The top rows are dedicated noise-robust detectors (SoftPatch, InReach, FUN-AD); below, MeDS is added on top of three modern backbones (HVQ, Dinomaly, INP-Former), and <strong>bold</strong> marks the winner of each baseline-vs-MeDS pair. Adding MeDS improves every backbone under noise &mdash; at only marginal cost on clean (\(0\%\)) data &mdash; and the gap widens as contamination rises: Dinomaly&rsquo;s image-level AUROC falls to \(87.4\%\) at \(40\%\) noise, while Dinomaly&nbsp;+&nbsp;MeDS holds <strong>99.16%</strong>, with the biggest gains on the hardest pixel-level metric (P-AP).
+        </p>
+      </div>
       <br>
       <br>
       <br>
 
-      <img src="static/images/result3.png" alt="MeDS qualitative results (table 3)" style="width:100%; max-width:1000px; display:block; margin:auto;"/>
+      <img src="static/images/result2.png" alt="Table 2: results on VisA across 0-10% noise" style="width:100%; max-width:1000px; display:block; margin:auto;"/>
+      <div class="content has-text-justified" style="max-width:1000px; margin:auto;">
+        <p>
+          <strong>Table 2 &mdash; VisA.</strong> The same comparison at VisA&rsquo;s noise ratios (\(0/2/5/10\%\)). MeDS once more lifts all three backbones on both image- and pixel-level metrics, with the largest improvements at the highest contamination &mdash; reproducing the MVTecAD trend on a second dataset.
+        </p>
+      </div>
       <br>
-      <h2 class="subtitle has-text-centered">
-      </h2>
+      <br>
+      <br>
+
+      <img src="static/images/result3.png" alt="Table 3: results on Real-IAD across 0-40% noise" style="width:100%; max-width:1000px; display:block; margin:auto;"/>
+      <div class="content has-text-justified" style="max-width:1000px; margin:auto;">
+        <p>
+          <strong>Table 3 &mdash; Real-IAD.</strong> Evaluated under Real-IAD&rsquo;s official single-class noisy protocol (a separate model per category, which baselines such as SoftPatch require to scale to its many categories). Dashes mark metrics a baseline does not report (some methods report only a subset of the four image-/pixel-level metrics). Dinomaly&nbsp;+&nbsp;MeDS achieves the best overall balance across image and pixel metrics, and its margin grows with noise &mdash; e.g. image-level AUROC of <strong>90.99%</strong> vs. \(87.78\%\) for Dinomaly at \(40\%\) noise.
+        </p>
+      </div>
       <br>
       <br>
       <br>
 
 
       <h2 class="subtitle has-text-centered">
-        [Ablation study]
+        [Ablation &amp; Hyperparameter Analysis]
       </h2>
-      <img src="static/images/ablation.png" alt="Ablation study" style="width:100%; max-width:700px; display:block; margin:auto;"/>
+      <div class="content has-text-justified" style="max-width:900px; margin:auto;">
+        <p>
+          A big reason MeDS needs no noise-ratio-specific tuning is that it is <strong>insensitive to most of its hyperparameters</strong>, and a single fixed subsampling ratio works across every noise level. Sweeping the final model across noise levels shows three things:
+        </p>
+        <ul>
+          <li><strong>Ensemble size \(B\) (left):</strong> adding more bootstrapped memories helps and then saturates &mdash; we simply use \(B = 100\).</li>
+          <li><strong>Subsampling ratio \(\rho\) (middle):</strong> there is a clear sweet spot around \(\rho = 0.1\); too large a ratio hurts, especially under heavy noise &mdash; exactly the behavior Theorem&nbsp;1 predicts.</li>
+          <li><strong>Distillation iterations \(T\) (right):</strong> performance rises and then <em>plateaus instead of degrading</em>, because progressive selection lets the model train for long without overfitting to noise &mdash; removing the Step&nbsp;2 trade-off entirely.</li>
+        </ul>
+        <p>
+          Separately, the paper&rsquo;s component ablation confirms that each stage &mdash; the memory ensemble, distillation, and progressive fine-tuning &mdash; is necessary: dropping any one measurably hurts.
+        </p>
+      </div>
+      <img src="static/images/ablation.png" alt="Final-model robustness to ensemble size B, subsampling ratio rho, and iterations T across noise levels" style="width:100%; max-width:900px; display:block; margin:auto;"/>
       <br>
       <br>
       <br>
@@ -336,7 +371,7 @@
       <br>
       <div class="content has-text-justified" style="max-width:700px; margin:auto;">
         <p>
-          Active label correction is a process where an AI scans a dataset and ranks the most suspicious or corrupted images at the very top so a human can quickly review and remove them. We use this approach to save annotators from manually checking every single image, and our experiment aims to prove that MeDS is superior. As shown in the graph, MeDS successfully pushes contaminated data to the top of the review list with higher accuracy than the baseline.
+          Beyond fully-automatic detection, MeDS doubles as a tool for <strong>cleaning datasets</strong>. By ranking training images from most- to least-suspicious (using its selection scores), it lets a human reviewer find and remove contaminated samples while inspecting far fewer images &mdash; instead of checking every single one. Concretely, MeDS pushes contaminated samples higher up the list (better ranking quality, measured by AUPRC) and shrinks the <em>inspection depth</em> &mdash; the fraction of the data you must review to catch <em>all</em> the contamination &mdash; cutting annotation effort across every noise level.
         </p>
       </div>
       <br>
