@@ -205,7 +205,7 @@
       Step 1: Memory Score Construction
     </h2>
     <br>
-    <img src="static/images/step1.png" alt="Step 1: Memory Score Construction" style="width:100%; max-width:1000px; display:block; margin:auto; align-items:center;"/>
+    <img src="static/images/step1.png" alt="Step 1: Memory Score Construction" style="width:100%; max-width:1000px; display:block; margin:2.25rem auto 0.75rem; align-items:center;"/>
       <div class="content has-text-justified" style="max-width:1000px; margin:auto;">
         <p>
           <strong>The idea.</strong> A memory bank stores little snapshots (patch features) of the training images. To score a new patch, we measure how far it is from its nearest neighbor in the memory &mdash; far away means &ldquo;unfamiliar,&rdquo; which usually means a defect. The catch under noisy data: if defective patches sneak into the memory, defects start to look normal and the detector is fooled.
@@ -230,7 +230,7 @@
           is always positive and is maximized at a moderate memory size \(m\) (formally, it is governed by a weight function that is <em>unimodal</em> in \(m\)). So there is an appropriate subsampling ratio that drives normal and abnormal features as far apart as possible.
         </p>
       </div>
-      <img src="static/images/theorem1.png" alt="Normal vs. anomaly score separation and AUROC across subsampling ratios at 10/20/40% noise" style="width:100%; max-width:1000px; display:block; margin:auto;"/>
+      <img src="static/images/theorem1.png" alt="Normal vs. anomaly score separation and AUROC across subsampling ratios at 10/20/40% noise" style="width:100%; max-width:1000px; display:block; margin:2.25rem auto 0.75rem;"/>
       <p class="has-text-centered is-size-7" style="max-width:1000px; margin:auto;">
         <em>Theorem&nbsp;1 in practice (at \(10\%/20\%/40\%\) noise): the gap between normal (blue) and anomaly (red) scores &mdash; and the resulting AUROC (green) &mdash; peaks at a small-to-moderate subsampling ratio, exactly the predicted sweet spot.</em>
       </p>
@@ -247,7 +247,7 @@
         Step 2: Distillation
       </h2>
       <br>
-      <img src="static/images/step2.png" alt="Step 2: Distillation" style="width:100%; max-width:1200px; display:block; margin:auto;"/>
+      <img src="static/images/step2.png" alt="Step 2: Distillation" style="width:100%; max-width:1200px; display:block; margin:2.25rem auto 0.75rem;"/>
       <div class="content has-text-justified" style="max-width:1000px; margin:auto;">
         <p>
           <strong>The idea.</strong> The Step&nbsp;1 scores are robust but coarse, because they rely on a frozen encoder. So we train a small <em>student</em> network (a reconstruction model \(s_\theta\)) to reproduce the memory scores &mdash; but now learning directly from the factory images, so it picks up domain-specific detail the frozen encoder missed and <strong>amplifies the gap</strong> between normal and defective patches.
@@ -267,7 +267,7 @@
         Step 3: Progressive Data Selection &amp; Fine-tuning
       </h2>
       <br>
-      <img src="static/images/step3.png" alt="Step 3: Progressive Data Selection and Finetune" style="width:100%; max-width:800px; display:block; margin:auto;"/>
+      <img src="static/images/step3.png" alt="Step 3: Progressive Data Selection and Finetune" style="width:100%; max-width:800px; display:block; margin:2.25rem auto 0.75rem;"/>
       <div class="content has-text-justified" style="max-width:1000px; margin:auto;">
         <p>
           <strong>The idea.</strong> Use the Step&nbsp;2 model to pick out the cleanest-looking images and fine-tune <em>only</em> on those. This lets the model keep training &mdash; getting sharper at outlining defects &mdash; without ever overfitting to the contaminated samples. We alternate <em>(select &rarr; train)</em>, fine-tuning \(s_\theta\) on the progressively selected clean subset \(\mathcal{S}_t\):
@@ -310,7 +310,7 @@
         </p>
       </div>
 
-      <img src="static/images/result1.png" alt="Table 1: results on MVTecAD across 0-40% noise" style="width:100%; max-width:1000px; display:block; margin:auto;"/>
+      <img src="static/images/result1.png" alt="Table 1: results on MVTecAD across 0-40% noise" style="width:100%; max-width:1000px; display:block; margin:2.25rem auto 0.75rem;"/>
       <div class="content has-text-justified" style="max-width:1000px; margin:auto;">
         <p>
           <strong>Table 1 &mdash; MVTecAD.</strong> Image-level (I-AUROC, I-AP) and pixel-level (P-AUPRO, P-AP) scores at \(0\!-\!40\%\) noise. The top rows are dedicated noise-robust detectors (SoftPatch, InReach, FUN-AD); below, MeDS is added on top of three modern backbones (HVQ, Dinomaly, INP-Former), and <strong>bold</strong> marks the winner of each baseline-vs-MeDS pair. Adding MeDS improves every backbone under noise &mdash; at only marginal cost on clean (\(0\%\)) data &mdash; and the gap widens as contamination rises: Dinomaly&rsquo;s image-level AUROC falls to \(87.4\%\) at \(40\%\) noise, while Dinomaly&nbsp;+&nbsp;MeDS holds <strong>99.16%</strong>, with the biggest gains on the hardest pixel-level metric (P-AP).
@@ -320,7 +320,7 @@
       <br>
       <br>
 
-      <img src="static/images/result2.png" alt="Table 2: results on VisA across 0-10% noise" style="width:100%; max-width:1000px; display:block; margin:auto;"/>
+      <img src="static/images/result2.png" alt="Table 2: results on VisA across 0-10% noise" style="width:100%; max-width:1000px; display:block; margin:2.25rem auto 0.75rem;"/>
       <div class="content has-text-justified" style="max-width:1000px; margin:auto;">
         <p>
           <strong>Table 2 &mdash; VisA.</strong> The same comparison at VisA&rsquo;s noise ratios (\(0/2/5/10\%\)). MeDS once more lifts all three backbones on both image- and pixel-level metrics, with the largest improvements at the highest contamination &mdash; reproducing the MVTecAD trend on a second dataset.
@@ -330,7 +330,7 @@
       <br>
       <br>
 
-      <img src="static/images/result3.png" alt="Table 3: results on Real-IAD across 0-40% noise" style="width:100%; max-width:1000px; display:block; margin:auto;"/>
+      <img src="static/images/result3.png" alt="Table 3: results on Real-IAD across 0-40% noise" style="width:100%; max-width:1000px; display:block; margin:2.25rem auto 0.75rem;"/>
       <div class="content has-text-justified" style="max-width:1000px; margin:auto;">
         <p>
           <strong>Table 3 &mdash; Real-IAD.</strong> Evaluated under Real-IAD&rsquo;s official single-class noisy protocol (a separate model per category, which baselines such as SoftPatch require to scale to its many categories). Dashes mark metrics a baseline does not report (some methods report only a subset of the four image-/pixel-level metrics). Dinomaly&nbsp;+&nbsp;MeDS achieves the best overall balance across image and pixel metrics, and its margin grows with noise &mdash; e.g. image-level AUROC of <strong>90.99%</strong> vs. \(87.78\%\) for Dinomaly at \(40\%\) noise.
@@ -344,7 +344,7 @@
       <h2 class="title is-3 has-text-centered">
         Ablation &amp; Hyperparameter Analysis
       </h2>
-      <div class="content has-text-justified" style="max-width:900px; margin:auto;">
+      <div class="content has-text-justified" style="max-width:1000px; margin:auto;">
         <p>
           <strong>Robustness to hyperparameters.</strong> A big reason MeDS needs no noise-ratio-specific tuning is that it is <strong>insensitive to most of its hyperparameters</strong>, and a single fixed subsampling ratio works across every noise level. The figure below sweeps the final model&rsquo;s image-level AUROC (top row) and pixel-level P-AP (bottom row) against three hyperparameters, with a separate curve per noise ratio (\(0/10/20/40\%\)):
         </p>
@@ -354,7 +354,7 @@
           <li><strong>Distillation iterations \(T\) (right).</strong> Performance rises and then <em>plateaus instead of degrading</em>. This is the payoff of progressive selection: where the distilled-only model of Step&nbsp;2 would start overfitting to noise, fine-tuning on the self-selected clean subset lets the model train far longer safely &mdash; so the exact stopping point no longer matters.</li>
         </ul>
       </div>
-      <img src="static/images/ablation.png" alt="Final-model robustness to ensemble size B, subsampling ratio rho, and iterations T across noise levels" style="width:100%; max-width:900px; display:block; margin:auto;"/>
+      <img src="static/images/ablation.png" alt="Final-model robustness to ensemble size B, subsampling ratio rho, and iterations T across noise levels" style="width:100%; max-width:1000px; display:block; margin:2.25rem auto 0.75rem;"/>
       <br>
       <br>
 
@@ -371,7 +371,7 @@
           The last rows isolate the fine-tuning design and confirm both halves matter: using the <em>distilled</em> model for both initialization (&ldquo;init&rdquo;) and sample selection (&ldquo;criteria&rdquo;) beats using the raw memory ensemble or a randomly-initialized model.
         </p>
       </div>
-      <img src="static/images/table4_ablation.png" alt="Table 4: component ablation of MeDS on MVTecAD (Dinomaly backbone) across 0-40% noise" style="width:100%; max-width:1000px; display:block; margin:auto;"/>
+      <img src="static/images/table4_ablation.png" alt="Table 4: component ablation of MeDS on MVTecAD (Dinomaly backbone) across 0-40% noise" style="width:100%; max-width:1000px; display:block; margin:2.25rem auto 0.75rem;"/>
       <br>
       <br>
       <br>
@@ -381,7 +381,7 @@
         Active Label Correction
       </h2>
       <br>
-      <img src="static/images/active_label_correction.png" alt="Active label correction results" style="width:100%; max-width:700px; display:block; margin:auto;"/>
+      <img src="static/images/active_label_correction.png" alt="Active label correction results" style="width:100%; max-width:700px; display:block; margin:2.25rem auto 0.75rem;"/>
       <br>
       <div class="content has-text-justified" style="max-width:700px; margin:auto;">
         <p>
