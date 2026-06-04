@@ -265,10 +265,10 @@
         <h2 class="title is-3">Preliminaries</h2>
         <div class="content has-text-justified">
           <p>
-            MeDS builds on two standard anomaly-detection mechanisms.
+            MeDS combines two standard anomaly-detection mechanisms with one well-known property of how neural networks learn.
           </p>
           <p>
-            <strong>1. Memory-based AD.</strong> A memory bank \(\mathcal{M}\) stores patch-level features of the training images; a patch is then scored by its distance to the nearest stored feature, so unfamiliar (likely anomalous) patches score high. With a frozen pretrained encoder \(g\) that maps an image \(x\) to a feature map \(g(x) \in \mathbb{R}^{H \times W \times C}\), the memory anomaly score at spatial position \((h,w)\) is
+            <strong>1. Memory-based AD.</strong> A memory bank \(\mathcal{M}\) stores patch-level features of the training images; a patch is then scored by its distance to the nearest stored feature, so unfamiliar (likely anomalous) patches score high. With a frozen, pretrained encoder \(g\) (e.g. an ImageNet-pretrained backbone) that maps an image \(x\) to a feature map \(g(x) \in \mathbb{R}^{H \times W \times C}\), the memory anomaly score at spatial position \((h,w)\) is
           </p>
           <p style="text-align:center;">
             \[ s_{\mathcal{M}}(x)_{hw} \;=\; \min_{z \in \mathcal{M}} D\!\left(z,\, g(x)_{hw}\right), \]
@@ -280,7 +280,7 @@
             \[ g(\mathcal{D}) \;:=\; \bigl\{\, g(x)_{hw} \;\bigm|\; x \in \mathcal{D},\; (h,w) \in [H]\times[W] \,\bigr\}, \]
           </p>
           <p>
-            typically via coreset subsampling. Because the encoder \(g\) is frozen, this score is robust to noise but only <em>coarse</em>.
+            typically via <em>coreset</em> subsampling &mdash; a compact subset chosen to approximate the full feature set. Because the encoder \(g\) is frozen, this score is robust to noise but only <em>coarse</em>.
           </p>
           <p>
             <strong>2. Teacher&ndash;student (reconstruction) AD.</strong> Here the anomaly score is the disagreement between the frozen teacher \(g\) and a trainable student \(f_\theta\) &mdash; the <em>reconstruction score</em>
@@ -295,7 +295,13 @@
             \[ \min_{\theta}\; \frac{1}{\lvert \mathcal{D} \rvert} \sum_{x \in \mathcal{D}} s_\theta(x). \]
           </p>
           <p>
-            The student is deliberately limited in capacity (e.g. a bottleneck decoder), so it reconstructs in-distribution (normal) patterns well and out-of-distribution (anomalous) ones poorly &mdash; making anomalies stand out. MeDS uses the <strong>memory score</strong> as a noise-robust starting signal and the <strong>reconstruction model</strong> as the trainable backbone it then sharpens and fine-tunes.
+            The student is deliberately limited in capacity (e.g. a bottleneck decoder), so it reconstructs in-distribution (normal) patterns well and out-of-distribution (anomalous) ones poorly &mdash; making anomalies stand out.
+          </p>
+          <p>
+            <strong>3. The early-learning bias.</strong> MeDS also leans on a well-documented property of neural-network training: when the targets are noisy, a network first fits the <em>dominant, consistent</em> patterns and only later <em>memorizes</em> the rare, inconsistent ones. Because normal patches greatly outnumber anomalous ones, a model trained on contaminated data drives the scores of normal patches down earlier and more strongly than those of anomalies &mdash; a built-in denoising effect.
+          </p>
+          <p>
+            <strong>Putting it together,</strong> MeDS uses the <strong>memory score</strong> as a noise-robust starting signal, distills it into the <strong>reconstruction model</strong> (exploiting the early-learning bias), and then fine-tunes that model on the data it trusts &mdash; the three steps described next.
           </p>
         </div>
       </div>
@@ -369,7 +375,7 @@
           <strong>The idea.</strong> The Step&nbsp;1 scores are robust but coarse, because they rely on a frozen encoder. So we train a small <em>student</em> network (a reconstruction model \(s_\theta\)) to reproduce the memory scores &mdash; but now learning directly from the factory images, so it picks up domain-specific detail the frozen encoder missed and <strong>amplifies the gap</strong> between normal and defective patches.
         </p>
         <p>
-          <strong>Why it doesn&rsquo;t just memorize the defects too.</strong> Neural networks learn the dominant, repeated patterns first and only memorize rare ones later (the &ldquo;early-learning&rdquo; effect). Since normal patches are the majority, the student lowers their scores earlier and more than the rare defective ones &mdash; effectively <em>denoising</em> the memory signal for free.
+          <strong>Why it doesn&rsquo;t just memorize the defects too.</strong> This is where the <em>early-learning bias</em> (see Preliminaries) pays off: the student fits the majority &mdash; normal &mdash; patterns first, so it lowers their scores earlier and more than the rare defective ones, effectively <em>denoising</em> the memory signal for free.
         </p>
         <p>
           <strong>The catch.</strong> Train too long and the network eventually memorizes the defects as well, hurting fine pixel-level accuracy; stop too early and it is under-trained for precise localization (see the graph on the right). Distillation alone can&rsquo;t have it both ways &mdash; which is exactly what Step&nbsp;3 resolves.
