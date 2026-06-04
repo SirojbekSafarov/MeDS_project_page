@@ -353,19 +353,25 @@
           <li><strong>Subsampling ratio \(\rho\) (middle).</strong> There is a clear peak around \(\rho = 0.1\): too small wastes data, while too large lets anomalous features leak into the memory and erodes the normal&ndash;anomaly gap &mdash; most damaging at \(40\%\) noise. Crucially, the <em>same</em> \(\rho = 0.1\) is best at every noise level, which is exactly why no per-noise tuning is needed (and matches the sweet spot predicted by Theorem&nbsp;1).</li>
           <li><strong>Distillation iterations \(T\) (right).</strong> Performance rises and then <em>plateaus instead of degrading</em>. This is the payoff of progressive selection: where the distilled-only model of Step&nbsp;2 would start overfitting to noise, fine-tuning on the self-selected clean subset lets the model train far longer safely &mdash; so the exact stopping point no longer matters.</li>
         </ul>
-        <p>
-          <strong>Component ablation.</strong> The paper also adds MeDS&rsquo;s three stages one at a time (on top of a Dinomaly backbone) to show that each is necessary:
-        </p>
-        <ul>
-          <li>The <strong>bootstrapped memory ensemble</strong> alone sharply improves image-level robustness under noise, but its pixel-level localization stays limited &mdash; it relies on frozen features.</li>
-          <li><strong>Distillation</strong> transfers that coarse robustness into a trainable network and refines its features, giving consistent gains across <em>all</em> metrics.</li>
-          <li><strong>Progressive fine-tuning</strong> improves both levels further, with the largest jump on the pixel-level P-AP metric &mdash; precise segmentation without overfitting to the contaminated samples.</li>
-        </ul>
-        <p>
-          Isolating the fine-tuning design confirms both halves matter: using the <em>distilled</em> model for both initialization and sample selection beats using the raw memory ensemble or a randomly-initialized model.
-        </p>
       </div>
       <img src="static/images/ablation.png" alt="Final-model robustness to ensemble size B, subsampling ratio rho, and iterations T across noise levels" style="width:100%; max-width:900px; display:block; margin:auto;"/>
+      <br>
+      <br>
+
+      <div class="content has-text-justified" style="max-width:1000px; margin:auto;">
+        <p>
+          <strong>Component ablation (Table 4).</strong> Adding MeDS&rsquo;s three stages one at a time, on top of a Dinomaly backbone, shows that each is necessary. Reading the table top to bottom &mdash; from the bare baseline to the full method &mdash; the metrics improve at every step, and the gains are largest under heavy noise:
+        </p>
+        <ul>
+          <li>The <strong>bootstrapped memory ensemble</strong> alone sharply improves image-level robustness under noise (e.g. I-AUROC at \(40\%\) noise jumps from \(90.45 \to 92.22\)), but its pixel-level localization stays limited &mdash; it relies on frozen features.</li>
+          <li><strong>Distillation</strong> transfers that coarse robustness into a trainable network and refines its features, giving consistent gains across <em>all</em> metrics.</li>
+          <li><strong>Progressive fine-tuning</strong> improves both levels further, with the largest jump on the pixel-level P-AP metric (up to \(68.05\) at \(40\%\) noise) &mdash; precise segmentation without overfitting to the contaminated samples.</li>
+        </ul>
+        <p>
+          The last rows isolate the fine-tuning design and confirm both halves matter: using the <em>distilled</em> model for both initialization (&ldquo;init&rdquo;) and sample selection (&ldquo;criteria&rdquo;) beats using the raw memory ensemble or a randomly-initialized model.
+        </p>
+      </div>
+      <img src="static/images/table4_ablation.png" alt="Table 4: component ablation of MeDS on MVTecAD (Dinomaly backbone) across 0-40% noise" style="width:100%; max-width:1000px; display:block; margin:auto;"/>
       <br>
       <br>
       <br>
