@@ -241,7 +241,13 @@
             \[ \text{noise ratio} \;=\; \frac{\lvert \mathcal{D}_{\text{anomaly}} \rvert}{\lvert \mathcal{D} \rvert}. \]
           </p>
           <p>
-            At test time the model must assign a <em>high</em> anomaly score to anomalous inputs and a <em>low</em> score to normal ones, producing both an <strong>image-level</strong> score (one value per image) and a <strong>pixel-level</strong> score map (one value per spatial location). The goal is to do this reliably <strong>without knowing the noise ratio</strong>, across the full range from clean data to heavy contamination.
+            At test time, for an input image \(x \in \mathcal{X}\) the model produces a <strong>pixel-level anomaly score map</strong> \(s(x) \in \mathbb{R}^{H \times W}\), from which a single <strong>image-level score</strong> is obtained by spatial max-pooling:
+          </p>
+          <p style="text-align:center;">
+            \[ S(x) \;=\; \max_{h,w}\; s(x)_{hw}. \]
+          </p>
+          <p>
+            A good detector scores anomalies above normal samples &mdash; ideally \(S(x_{\text{anom}}) > S(x_{\text{norm}})\) at the image level, with the map \(s(x)\) highlighting the defective regions at the pixel level. The core challenge is to learn such a scorer <strong>using only the unlabeled, contaminated set \(\mathcal{D}\)</strong> and <strong>without knowing the noise ratio</strong> &mdash; so that it stays reliable across the full range from clean data to heavy contamination.
           </p>
         </div>
       </div>
