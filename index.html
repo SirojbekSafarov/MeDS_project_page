@@ -203,7 +203,15 @@
             Existing noise-robust methods only cope partially: they tend to rely on strong assumptions &mdash; knowing the contamination ratio in advance, or how anomalous samples are distributed &mdash; so their best settings shift from one dataset and noise level to the next. That means fragile, per-setting hyperparameter tuning and a steep drop-off under heavy contamination. To our knowledge, no prior method stays accurate at <em>both</em> the image level (<em>is this product defective?</em>) and the pixel level (<em>where is the defect?</em>) across a wide range of noise ratios.
           </p>
           <p>
-            <strong>MeDS targets exactly this gap:</strong> robust image- and pixel-level anomaly detection across contamination levels from 0% to 40% &mdash; with no noise-ratio-specific tuning.
+            <strong>MeDS targets exactly this gap.</strong> It is a noise-robust training algorithm built around <em>data selection</em>: instead of assuming a clean dataset or a known contamination level, it learns to separate normal from contaminated samples directly from the noisy data, and then trains only on the part it trusts. In doing so it solves three problems that trip up prior methods:
+          </p>
+          <ul>
+            <li><strong>No noise-ratio-specific tuning.</strong> A single fixed configuration works from perfectly clean data all the way up to 40% contamination &mdash; there is no need to know, estimate, or tune for the noise ratio.</li>
+            <li><strong>Robustness at both levels.</strong> It stays accurate for image-level detection (<em>is this product defective?</em>) <em>and</em> pixel-level localization (<em>where is the defect?</em>), instead of trading one off against the other as earlier methods do.</li>
+            <li><strong>Strong performance under heavy noise.</strong> On MVTecAD it holds <strong>99.16%</strong> image-level AUROC even at a 40% noise ratio, and it sets a new state of the art on VisA and Real-IAD under contamination.</li>
+          </ul>
+          <p>
+            As a bonus, the very scores that drive this selection can also rank a dataset from most- to least-suspicious &mdash; turning MeDS into a practical tool for <em>cleaning</em> contaminated datasets with far less human effort.
           </p>
         </div>
       </div>
