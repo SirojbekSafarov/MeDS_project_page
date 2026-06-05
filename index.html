@@ -341,15 +341,31 @@
           \]
         </p>
         <p>
-          <strong>Why there is a sweet spot (Theorem 1).</strong> Make the memory too large and defects leak in and look normal; too small and even ordinary patches look unfamiliar. Theorem&nbsp;1 makes this precise: the expected gap between how far <em>anomalous</em> vs. <em>normal</em> patches sit from the memory,
+          <strong>Why there is a sweet spot.</strong> Make the memory too large and defects leak in and look normal; too small and even ordinary patches look unfamiliar. Theorem&nbsp;1 makes this precise.
+        </p>
+      </div>
+
+      <div class="content" style="max-width:1000px; margin:1.5rem auto; padding:1.0rem 1.5rem; background:#f7f7f9; border-left:4px solid #363636; border-radius:4px;">
+        <p>
+          <strong>Theorem&nbsp;1.</strong> Under a regularity condition, for any anomaly and normal patch features \(q_{\text{anom}}\) and \(q_{\text{norm}}\), the expected gap
         </p>
         <p style="text-align:center;">
-          \[
-            \Delta(m) \;:=\; \mathbb{E}\!\left[D(q_{\text{anom}}, \mathcal{M})\right] - \mathbb{E}\!\left[D(q_{\text{norm}}, \mathcal{M})\right],
-          \]
+          \[ \Delta(m) \;:=\; \mathbb{E}\!\left[D(q_{\text{anom}}, \mathcal{M})\right] - \mathbb{E}\!\left[D(q_{\text{norm}}, \mathcal{M})\right] \]
         </p>
         <p>
-          is always positive and is maximized at a moderate memory size \(m\) (formally, it is governed by a weight function that is <em>unimodal</em> in \(m\)). So there is an appropriate subsampling ratio that drives normal and abnormal features as far apart as possible.
+          satisfies \(\Delta(m) > 0\), and is decomposed into a second-order Taylor approximation \(\Delta_0\) with remainder \(\epsilon_0(m)\),
+        </p>
+        <p style="text-align:center;">
+          \[ \Delta(m) \;=\; \Delta_0(m) + \epsilon_0(m), \qquad \Delta_0(m) \;=\; \int_0^{\infty} \delta(r)\,\omega(m, r)\, \mathrm{d}r, \]
+        </p>
+        <p>
+          where \(\delta\) is non-negative and the weight function \(\omega(m, r)\) is <em>unimodal</em> with respect to \(m\). The expectation \(\mathbb{E}\) is taken over the memory \(\mathcal{M}\) randomly subsampled from the extracted feature set \(g(\mathcal{D})\) under the constraint \(\lvert \mathcal{M} \rvert = m\).
+        </p>
+      </div>
+
+      <div class="content has-text-justified" style="max-width:1000px; margin:auto;">
+        <p>
+          In words: the normal&ndash;anomaly gap \(\Delta(m)\) is always positive, and because the weight \(\omega\) is unimodal in \(m\), it is maximized at a <em>moderate</em> memory size. So there is an appropriate subsampling ratio that drives normal and abnormal features as far apart as possible.
         </p>
       </div>
       <img src="static/images/theorem1.png" alt="Normal vs. anomaly score separation and AUROC across subsampling ratios at 10/20/40% noise" style="width:100%; max-width:1000px; display:block; margin:2.25rem auto 0.75rem;"/>
